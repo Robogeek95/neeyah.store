@@ -53,7 +53,7 @@ const ProductCard = props => {
             src={props.image}
             alt={props.name}
             layout="fill"
-            objectFit="contain"
+            objectFit="cover"
           />
         </div>
 
@@ -76,11 +76,10 @@ const ProductCard = props => {
             type="button"
             onClick={handleOnAddToCart}
             disabled={adding || props.disabled}
-            className={`border rounded-lg py-1 px-4 hover:bg-rose-500 hover:border-rose-500 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${
-              adding
+            className={`border rounded-lg py-1 px-4 hover:bg-rose-500 hover:border-rose-500 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${adding
                 ? 'disabled:bg-rose-500 disabled:border-rose-500 disabled:text-white'
                 : 'disabled:hover:bg-transparent disabled:hover:text-current disabled:hover:border-gray-200'
-            }`}
+              }`}
           >
             {adding ? 'Adding...' : 'Add to cart'}
           </button>

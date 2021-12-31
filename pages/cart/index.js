@@ -12,26 +12,31 @@ import {
   MinusSmIcon,
   PlusSmIcon,
 } from '@heroicons/react/outline';
+import { useRouter } from 'next/router';
 
 const Cart = () => {
   const { cartDetails, totalPrice, cartCount, addItem, removeItem, clearCart } =
     useShoppingCart();
-  const [redirecting, setRedirecting] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter()
 
   const redirectToCheckout = async () => {
-    // Create Stripe checkout
-    const {
-      data: { id },
-    } = await axios.post('/api/checkout_sessions', {
-      items: Object.entries(cartDetails).map(([_, { id, quantity }]) => ({
-        price: id,
-        quantity,
-      })),
-    });
+    // // Create Stripe checkout
+    // const {
+    //   data: { id },
+    // } = await axios.post('/api/checkout_sessions', {
+    //   items: Object.entries(cartDetails).map(([_, { id, quantity }]) => ({
+    //     price: id,
+    //     quantity,
+    //   })),
+    // });
 
-    // Redirect to checkout
-    const stripe = await getStripe();
-    await stripe.redirectToCheckout({ sessionId: id });
+    // // Redirect to checkout
+    // const stripe = await getStripe();
+    // await stripe.redirectToCheckout({ sessionId: id });
+
+    router.push('checkout')
   };
 
   return (
@@ -141,10 +146,10 @@ const Cart = () => {
 
               <button
                 onClick={redirectToCheckout}
-                disabled={redirecting}
+                disabled={loading}
                 className="border rounded py-2 px-6 bg-rose-500 hover:bg-rose-600 border-rose-500 hover:border-rose-600 focus:ring-4 focus:ring-opacity-50 focus:ring-rose-500 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-rose-500 max-w-max mt-4"
               >
-                {redirecting ? 'Redirecting...' : 'Go to Checkout'}
+                {loading ? 'Loading...' : 'Continue to Checkout'}
               </button>
             </div>
           </div>
